@@ -5,7 +5,7 @@ This is a fork of [Dr. Scott Hawley's](https://github.com/drscotthawley) Panotti
 1.  Assuming clean Ubuntu 18.04, 64bit etc.  I'm working with a dual GPU setup in an Alienware tower with graphics-amplifier.
 1.  Uninstall Anaconda and everything to do with it.
 1.  Install the NVIDIA drivers.  https://www.nvidia.com/Download/index.aspx  Reboot.
-1.  Install CUDA. (don't forget the updates).  Reboot.
+1.  Install [CUDA](https://developer.nvidia.com/cuda-10.0-download-archive?target_os=Linux&target_arch=x86_64&target_distro=Ubuntu&target_version=1804&target_type=deblocal). Don't forget the updates.  Install 10.0, **not** 10.1 -- Tensorflow is at the time of this writing not compatible with 10.1. Be sure to follow the bash-commands instructions on that site, I was only able to install CUDA using the terminal, running the Ubuntu installer over the .deb won't work for the CUDA install. Reboot.
 1.  Add the following to your .bashrc:
 ```bash
 export PATH="/usr/local/cuda-10.0/bin:$PATH"
