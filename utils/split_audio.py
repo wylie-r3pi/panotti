@@ -1,10 +1,10 @@
-#! /usr/bin/env python
+#! /usr/bin/python3
 '''
 split_audio.py
 Author: Scott Hawley
 
 Splits an audio file into clips of length "clip_dur" where is clip_dur the duration in seconds
-Generated files get a "_sN" appended to their filename (before the extension) where N just 
+Generated files get a "_sN" appended to their filename (before the extension) where N just
 counts the clip number
 
 Works on mono, stereo,...arbitrary numbers of channels
@@ -49,13 +49,13 @@ def split_audio(file_list, clip_dur=2, remove_orig=True):
             axis = signal.ndim - 1
             signal_length = signal.shape[axis]
             stride = clip_dur * sr                             # length of clip in samples
-            print("stride= ",stride,", signal_length = ", signal_length )                 
+            print("stride= ",stride,", signal_length = ", signal_length )
             indices = np.arange(stride, signal_length,stride)   # where to split
             clip_list = np.split( signal, indices, axis=axis)       # do the splitting
             intended_length = stride
             clips = fix_last_element(clip_list, intended_length, axis) # what to do with last clip
 
-            sections = int( np.ceil( signal.shape[axis] / stride) ) # just to check 
+            sections = int( np.ceil( signal.shape[axis] / stride) ) # just to check
             if( sections != clips.shape[0]):                        # just in case
                 print("              **** Warning: sections = "+str(sections)+", but clips.shape[0] = "+str(clips.shape[0]) )
             ndigits = len(str(sections))   # find out # digits needed to print section #s
@@ -80,6 +80,6 @@ if __name__ == "__main__":
     parser.add_argument("-r", "--remove", help="remove original (long) file(s) after splitting",
                     action="store_true")
     parser.add_argument("clip_dur", help="duraction of each clip in seconds",type=int)
-    parser.add_argument('file', help="file(s) to split", nargs='+')   
+    parser.add_argument('file', help="file(s) to split", nargs='+')
     args = parser.parse_args()
     split_audio(args.file, clip_dur=args.clip_dur, remove_orig=args.remove)

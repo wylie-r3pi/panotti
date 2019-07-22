@@ -66,13 +66,13 @@ echo "      sine sweep..."; sox -r $RATE -n gen_sinesw.$EXT synth $SIGNAL_DUR si
 echo "      fmodded plucks..."; sox -n gen_pluck.$EXT  synth 1 pluck  synth 1 sine fmod 700-100 repeat $SIGNAL_DUR
 
 echo "Splitting into $CLIP_DUR -second clips..."
-python $PANOTTI_HOME/utils/split_audio.py -r $CLIP_DUR *.$EXT
+python3 $PANOTTI_HOME/utils/split_audio.py -r $CLIP_DUR *.$EXT
 
 echo "Augmenting dataset by a factor of $N_AUG..."
-python $PANOTTI_HOME/utils/augment_audio.py -q $N_AUG *.$EXT
+python3 $PANOTTI_HOME/utils/augment_audio.py -q $N_AUG *.$EXT
 
 echo "Binauralifying into $N_AZ discrete azimuthal locations..."
-python $PANOTTI_HOME/utils/binauralify.py -q $N_AZ *.$EXT
+python3 $PANOTTI_HOME/utils/binauralify.py -q $N_AZ *.$EXT
 
 echo "Moving clips to Samples/"
 mkdir -p Samples
@@ -82,7 +82,7 @@ echo "Cleaing directory of all non-essential generated files"
 /bin/rm -f gen*.$EXT compact.tar.Z
 
 echo "Pre-procesing data (could take a while)..."
-python $PANOTTI_HOME/preprocess_data.py --clean
+python3 $PANOTTI_HOME/preprocess_data.py --clean
 
 samples_size=$(du -smh Samples | awk '{print $1}')
 

@@ -1,10 +1,10 @@
-#! /usr/bin/env python
+#! /usr/bin/python3
 '''
 concat_audio.py
 Author: Scott Hawley
 
 Joins a bunch of audio files into one big file.
-Filename of output is whatever the last filename is + "_Long" 
+Filename of output is whatever the last filename is + "_Long"
 
 Works on mono, stereo,...arbitrary numbers of channels
 
@@ -49,7 +49,6 @@ def main(args):
 if __name__ == "__main__":
 	import argparse
 	parser = argparse.ArgumentParser(description="concat_audio: concatenates multiple files into one")
-	parser.add_argument('file', help="file(s) to concat", nargs='+')   
+	parser.add_argument('file', help="file(s) to concat", nargs='+')
 	args = parser.parse_args()
 	main(args)
-

@@ -1,3 +1,31 @@
+This is a fork of [Dr. Scott Hawley's](https://github.com/drscotthawley) Panotti (see the original README below the dashed-line separator), itself a derivation of other projects, as mentioned below.  The only things I've changed or added have to do with my experience getting this installed, up, and running.  It's very particular to my environment and equipment; I have no idea how applicable these instructions will be in slightly different circumstances.
+
+
+## Installation/Requirements Addendum
+1.  Assuming clean Ubuntu 18.04, 64bit etc.  I'm working with a dual GPU setup in an Alienware tower with graphics-amplifier.
+1.  Uninstall Anaconda and everything to do with it.
+1.  Install the NVIDIA drivers.  https://www.nvidia.com/Download/index.aspx  Reboot.
+1.  Install CUDA. (don't forget the updates).  Reboot.
+1.  Add the following to your .bashrc:
+```bash
+export PATH="/usr/local/cuda-10.0/bin:$PATH"
+export CUDADIR=/usr/local/cuda-10.0
+export LD_LIBRARY_PATH=/usr/local/cuda-10.0/lib64
+export LD_LIBRARY_PATH=/usr/local/cuda/lib64:$LD_LIBRARY_PATH
+```
+1.  Install the CUDANN library stuff.  https://developer.nvidia.com/rdp/cudnn-download  Reboot.
+1.  Install Python3 and Pip3.  Don't alias anything, we just change invocations in the scripts instead.  In the instructions below you'll need to invoke `python3 ../../train_network.py`, and any library/pip operations will typically need to be `sudo python3 -m install [...]` instead of `pip3 [...]`, although `pip3 list` works fine.
+1.  Everything else is pretty much the same as below, you run the requirements.txt file like `python3 -m pip requirements.txt`.  I haven't put numpy in there (not sure why Hawley didn't either, maybe I'll try later with a fresh repo) so just as all the other reqs below not listed in that file it will need to be installed manually, but with pip `python3 -m pip install numpy`, whereas the sox installation is `sudo apt-get install sox`
+
+Some downgrades comments:
+1.  Tensorflow-gpu had to be downgraded to 1.13.1 because of a bug in 1.14.0 affecting multi-GPU operations.  [issue link](https://github.com/tensorflow/tensorflow/issues/30728)
+1. Keras had to be downgraded to 2.1.6 because of a bug involving shape (link not immediately available)
+
+Future versions may not require these downgrades.  I've included a file `pip_listing_version_check.md` which shows the Python environment with the setup working, for future references in case of more breaking changes.
+
+
+________________________________________________________________
+
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.1275605.svg)](https://doi.org/10.5281/zenodo.1275605)
 
 # Panotti: A Convolutional Neural Network classifier for multichannel audio waveforms
@@ -11,25 +39,25 @@ This is a version of the [audio-classifier-keras-cnn](https://github.com/drscott
 *NOTE: The  majority of issues people seem to have in using this utility, stem from inconsistencies in their audio datasets. This is to the point where I hesitate to delve into such reports. I suggest trying the binaural audio example and see if your same problems arise.* -SH
 
 
-## Installation 
+## Installation
 
 ### Preface: Requirements
 Probably Mac OS X or Linux. (Windows users: I have no experience to offer you.)
 Not everything is required, here's a overview:
 
-* Required: 
+* Required:
 	* Python 3.5
 	* numpy
 	* keras
-	* tensorflow 
+	* tensorflow
 	* librosa
 	* matplotlib
 	* h5py
-* Optional: 
+* Optional:
 	* sox ("Sound eXchange": command-line utility for examples/binaural. Install via "apt-get install sox")
 	* pygame (for exampes/headgames.py)
 	* For sorting-hat: flask, kivy kivy-garden
-	
+
 ...the `requirements.txt` file method is going to try to install both required and optional packages.
 
 ### Installation:
@@ -51,7 +79,7 @@ I'm not shipping this with any audio but you can generate some for the 'fake bin
 *Check out the new user-friendly server mode, Sorting H.A.T., in folder sorting-hat/!*
 
 ## Quick Start
-* Make a folder called `Samples/` and inside it create sub-folders with the names of each category you want to train on. Place your audio files in these sub-folders accordingly. 
+* Make a folder called `Samples/` and inside it create sub-folders with the names of each category you want to train on. Place your audio files in these sub-folders accordingly.
 * run `python preprocess_data.py`
 * run `python train_network.py`
 * run `python eval_network.py`  - This applies the trained network to the testing dataset and gives you accuracy reports.
@@ -119,7 +147,7 @@ On the [IDMT Audio Effects Database](https://www.idmt.fraunhofer.de/en/business_
 
 This accuracy is comparable to the [original 2010 study by Stein et al.](http://www.ece.rochester.edu/courses/ECE472/resources/Papers/Stein_2010.pdf), who used a Support Vector Machine.
 
-This was achieved by running for 10 hours on [our workstation with an NVIDIA GTX1080 GPU](https://pcpartpicker.com/b/4xLD4D). 
+This was achieved by running for 10 hours on [our workstation with an NVIDIA GTX1080 GPU](https://pcpartpicker.com/b/4xLD4D).
 
 ## Extra Tricks
 - We have multi-GPU training.  The saving & loading means we get warning messages from Keras. Ignore those. It's because if we compile both the parallel model and its
@@ -130,4 +158,3 @@ serial counterpart, it breaks things. So we leave the serial one uncompiled and 
 
 <hr>
 -- [@drscotthawley](https://drscotthawley.github.io)
-

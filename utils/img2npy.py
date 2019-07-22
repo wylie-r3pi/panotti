@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#! /usr/bin/python3
 
 # Converts Image files format files to numpy, reading whatever image format is given
 # does not remove old extension, i.e. new file is ____.jpeg.npy (no reason other than laziness)

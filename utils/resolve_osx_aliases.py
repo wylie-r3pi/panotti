@@ -1,5 +1,4 @@
-#!/usr/bin/env python3
-#
+#! /usr/bin/python3
 # Resolve Mac OS X 'aliases' by finding where they point to
 # Author: Scott H. Hawley
 #

@@ -1,4 +1,4 @@
-#! /usr/bin/env python3
+#! /usr/bin/python3
 '''
 Given one audio clip, output what the network thinks
 '''

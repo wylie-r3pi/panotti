@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#! /usr/bin/python3
 
 # Converts NumPy format files to image files, using whatever image format is specified
 # default = jpeg
